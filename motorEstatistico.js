@@ -6,10 +6,10 @@
 // --- MICRO-MOTOR DE ÁLGEBRA LINEAR NATIVO (Substituindo o math.js) ---
 const mathNativo = {
     transpose(matrix) {
-        return matrix[0].map((_, colIndex) => matrix.map(row => row[colIndex]));
+        return matrix.map((_, colIndex) => matrix.map(row => row[colIndex]));
     },
     multiply(A, B) {
-        if (!Array.isArray(B[0])) { // Multiplicação de Escalar por Matriz
+        if (!Array.isArray(B)) { // Multiplicação de Escalar por Matriz
             const scalar = A;
             const mat = B;
             return mat.map(row => row.map(val => val * scalar));
@@ -33,7 +33,6 @@ const mathNativo = {
         for (let i = 0; i < n; i++) {
             let pivot = A[i][i];
             if (Math.abs(pivot) < 1e-10) {
-                // Pequena perturbação para evitar divisão por zero em matrizes quase singulares
                 pivot = 1e-10;
                 A[i][i] = pivot;
             }
@@ -104,21 +103,24 @@ export function executarProcessamentoEstatistico(amostra, variaveisX, variavelY)
     let Y = [];
 
     amostra.forEach(imovel => {
-        // Inicializa a linha criando um array que já contém o número 1 (Intercepto bo)
-        let linhaX = Array.from([1]); 
+        // Inicialização explícita com o número 1 para o Intercepto (b0)
+        let linhaX =; 
         
-        variaveisX.forEach(v => linhaX.push(Number(imovel[v])));
+        variaveisX.forEach(v => {
+            linhaX.push(Number(imovel[v]));
+        });
         X.push(linhaX);
         Y.push([Number(imovel[variavelY])]);
     });
 
-    // Operações Matriciais Nativas usando nosso micro-motor
+    // Operações Matriciais Nativas
     const XT = mathNativo.transpose(X);
     const XTX = mathNativo.multiply(XT, X);
     const XTX_inv = mathNativo.inv(XTX);
     const XTY = mathNativo.multiply(XT, Y);
     const Beta = mathNativo.multiply(XTX_inv, XTY);
 
+    // Extração linear estável dos coeficientes e dados
     const coeficientesFlats = Beta.map(row => row[0]);
     const Y_predito = mathNativo.multiply(X, Beta);
     const Residuos = mathNativo.subtract(Y, Y_predito).map(row => row[0]);
