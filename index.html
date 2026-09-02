@@ -6,83 +6,262 @@
     <title>Caixa AVM - Engenharia de Avaliações</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#005ca9">
-    <script src="https://unpkg.com"></script>
+    
     <style>
-        :root { --primary: #005ca9; --secondary: #f2f2f2; --dark: #333333; --success: #28a745; --danger: #dc3545; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: var(--secondary); color: var(--dark); }
-        header { background-color: var(--primary); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .container { max-width: 1000px; margin: 20px auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .btn { background-color: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: background 0.2s; }
+        :root {
+            --primary: #005ca9;
+            --secondary: #f2f2f2;
+            --dark: #333333;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
         .btn:hover { background-color: #004480; }
         .btn-success { background-color: var(--success); }
-        .grid-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .form-group { display: flex; flex-direction: column; }
-        .form-group label { margin-bottom: 5px; font-size: 0.9rem; font-weight: 600; }
-        .form-group input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        .btn-success:hover { background-color: #218838; }
+
+        .grid-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
         th { background-color: #f8f9fa; }
-        .badge { padding: 5px 10px; border-radius: 12px; font-size: 0.85rem; font-weight: bold; color: white; }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: white;
+        }
         .badge-success { background-color: var(--success); }
         .badge-danger { background-color: var(--danger); }
-        @media print { header, .no-print, form, .btn { display: none !important; } .container { box-shadow: none; max-width: 100%; margin: 0; padding: 0; } }
+
+        @media print {
+            body { background: white; color: black; }
+            header, .no-print, form, .btn { display: none !important; }
+            .container { box-shadow: none; max-width: 100%; margin: 0; padding: 0; }
+            .page-break { page-break-before: always; }
+        }
     </style>
 </head>
 <body>
+
 <header>
     <h2>CAIXA AVM - NBR 14653</h2>
     <span id="status-rede" class="badge badge-success">Online</span>
 </header>
+
 <div class="container">
     <div class="no-print">
         <h3>Inserir Amostra de Mercado</h3>
         <form id="form-amostra">
             <div class="grid-form">
-                <div class="form-group"><label>Preço Total (R$)</label><input type="number" id="input-preco" required step="0.01"></div>
-                <div class="form-group"><label>Área Útil (m²)</label><input type="number" id="input-area" required step="0.1"></div>
-                <div class="form-group"><label>Vagas de Garagem</label><input type="number" id="input-vagas" required min="0"></div>
-                <div class="form-group"><label>Idade do Imóvel (Anos)</label><input type="number" id="input-idade" required min="0"></div>
-            </div>
-            <div style="margin-bottom: 15px;">
-                <label><input type="checkbox" id="chk-log-y"> Aplicar Logaritmo no Preço (ln Y)</label><br>
-                <label><input type="checkbox" id="chk-log-area"> Aplicar Logaritmo na Área (ln X1)</label>
+                <div class="form-group">
+                    <label>Preço Total (R$)</label>
+                    <input type="number" id="input-preco" required step="0.01">
+                </div>
+                <div class="form-group">
+                    <label>Área Útil (m²)</label>
+                    <input type="number" id="input-area" required step="0.1">
+                </div>
+                <div class="form-group">
+                    <label>Vagas de Garagem</label>
+                    <input type="number" id="input-vagas" required min="0">
+                </div>
+                <div class="form-group">
+                    <label>Idade do Imóvel (Anos)</label>
+                    <input type="number" id="input-idade" required min="0">
+                </div>
             </div>
             <button type="submit" class="btn btn-success">Adicionar Amostra</button>
             <button type="button" class="btn" id="btn-calcular" style="margin-left: 10px;">Processar Regressão</button>
         </form>
-        <h3>Amostras Coletadas</h3>
+
+        <h3>Banco de Dados de Amostras Coletadas</h3>
         <table id="tabela-amostras">
-            <thead><tr><th>ID</th><th>Preço (Y)</th><th>Área (X1)</th><th>Vagas (X2)</th><th>Idade (X3)</th></tr></thead>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Preço (Y)</th>
+                    <th>Área (X1)</th>
+                    <th>Vagas (X2)</th>
+                    <th>Idade (X3)</th>
+                </tr>
+            </thead>
             <tbody></tbody>
         </table>
     </div>
+
     <div id="painel-relatorio" style="margin-top: 30px; display: none;">
         <hr style="border: 1px solid var(--primary); margin: 30px 0;">
-        <center><h1>RELATÓRIO TÉCNICO DE INFERÊNCIA ESTATÍSTICA</h1></center>
-        <h3>1. Resumo do Modelo</h3>
+        <center>
+            <h1>RELATÓRIO TÉCNICO DE INFERÊNCIA ESTATÍSTICA</h1>
+            <p>Avaliação de Imóveis Urbanos - Padrão NBR 14653-2</p>
+        </center>
+
+        <h3>1. Resumo do Modelo Executado</h3>
         <table>
-            <tr><td><strong>Amostra (N)</strong></td><td id="out-n">-</td><td><strong>R²</strong></td><td id="out-r2">-</td></tr>
-            <tr><td><strong>GL</strong></td><td id="out-gl">-</td><td><strong>R² Ajustado</strong></td><td id="out-r2ajustado">-</td></tr>
+            <tr>
+                <td><strong>Tamanho da Amostra (N)</strong></td>
+                <td id="out-n">-</td>
+                <td><strong>Coeficiente de Determinação (R²)</strong></td>
+                <td id="out-r2">-</td>
+            </tr>
+            <tr>
+                <td><strong>Graus de Liberdade (GL)</strong></td>
+                <td id="out-gl">-</td>
+                <td><strong>R² Ajustado</strong></td>
+                <td id="out-r2ajustado">-</td>
+            </tr>
         </table>
-        <h3>2. Significância Global (Teste F)</h3>
+
+        <h3>2. Significância Global (Teste F de Snedecor)</h3>
         <table>
-            <thead><tr><th>F Calc</th><th>P-Value (F)</th><th>Significativo (5%)</th><th>Grau</th></tr></thead>
-            <tbody><tr><td id="out-f-calc">-</td><td id="out-f-pvalue">-</td><td id="out-f-sig">-</td><td><span id="out-f-grau" class="badge">-</span></td></tr></tbody>
+            <thead>
+                <tr>
+                    <th>F Calculado</th>
+                    <th>P-Value (F)</th>
+                    <th>Significância Global (α = 5%)</th>
+                    <th>Enquadramento da Norma</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="out-f-calc">-</td>
+                    <td id="out-f-pvalue">-</td>
+                    <td id="out-f-sig">-</td>
+                    <td><span id="out-f-grau" class="badge">-</span></td>
+                </tr>
+            </tbody>
         </table>
-        <h3>3. Variáveis Independentes (Teste t)</h3>
+
+        <h3>3. Análise das Variáveis Independentes (Teste t de Student)</h3>
         <table id="tabela-coeficientes">
-            <thead><tr><th>Variável</th><th>β</th><th>Erro Padrão</th><th>t Calc</th><th>P-Value</th><th>Significativo (10%)</th></tr></thead>
+            <thead>
+                <tr>
+                    <th>Variável</th>
+                    <th>Coeficiente (β)</th>
+                    <th>Erro Padrão</th>
+                    <th>t Calculado</th>
+                    <th>P-Value (t)</th>
+                    <th>Significativo (α = 10%)</th>
+                </tr>
+            </thead>
             <tbody></tbody>
         </table>
-        <div class="no-print" style="margin-top: 30px; text-align: right;"><button class="btn" onclick="window.print()">Exportar em PDF</button></div>
+
+        <div class="no-print" style="margin-top: 30px; text-align: right;">
+            <button class="btn" onclick="window.print()">Exportar Laudo em PDF</button>
+        </div>
     </div>
 </div>
+
 <script type="module">
-   import { executarProcessamentoEstatistico } from '/caixa-avm/motorEstatistico.js';
+    import { executarProcessamentoEstatistico } from '/caixa-avm/motorEstatistico.js';
     import { salvarAmostraOffline, inicializarBanco } from '/caixa-avm/database.js';
+
     let memoriaAmostras = [];
+    let bancoInicializado = false;
+
+    inicializarBanco()
+        .then(() => {
+            bancoInicializado = true;
+            console.log("Banco de dados IndexedDB pronto.");
+            atualizarStatusRede(navigator.onLine);
+        })
+        .catch(err => {
+            console.error("Erro ao inicializar banco local, operando em memória temporária:", err);
+            atualizarStatusRede(navigator.onLine);
+        });
+
+    window.addEventListener('online', () => atualizarStatusRede(true));
+    window.addEventListener('offline', () => atualizarStatusRede(false));
+    
+    function atualizarStatusRede(online) {
+        const badge = document.getElementById('status-rede');
+        if (!badge) return;
+        if (online) {
+            badge.textContent = "Online";
+            badge.className = "badge badge-success";
+        } else {
+            badge.textContent = "Offline - Modo Campo";
+            badge.className = "badge badge-danger";
+        }
+    }
+
     document.getElementById('form-amostra').addEventListener('submit', async (e) => {
         e.preventDefault();
+        
         const novaAmostra = {
             projetoId: 1,
             preco: parseFloat(document.getElementById('input-preco').value),
@@ -90,45 +269,35 @@
             vagas: parseInt(document.getElementById('input-vagas').value),
             idade: parseInt(document.getElementById('input-idade').value)
         };
-        await salvarAmostraOffline(novaAmostra);
+
         memoriaAmostras.push(novaAmostra);
         renderizarTabelaAmostras();
         document.getElementById('form-amostra').reset();
+
+        if (bancoInicializado) {
+            try {
+                await salvarAmostraOffline(novaAmostra);
+            } catch (err) {
+                console.warn("Falha ao salvar cópia offline no IndexedDB:", err);
+            }
+        }
     });
+
     function renderizarTabelaAmostras() {
         const tbody = document.querySelector('#tabela-amostras tbody');
+        if (!tbody) return;
         tbody.innerHTML = '';
         memoriaAmostras.forEach((a, index) => {
-            tbody.innerHTML += `<tr><td>${index + 1}</td><td>R$ ${a.preco}</td><td>${a.area} m²</td><td>${a.vagas}</td><td>${a.idade} anos</td></tr>`;
+            tbody.innerHTML += `<tr>
+                <td>${index + 1}</td>
+                <td>R$ ${a.preco.toLocaleString('pt-BR')}</td>
+                <td>${a.area} m²</td>
+                <td>${a.vagas}</td>
+                <td>${a.idade} anos</td>
+            </tr>`;
         });
     }
+
     document.getElementById('btn-calcular').addEventListener('click', () => {
-        if(memoriaAmostras.length < 5) { alert('Mínimo 5 amostras.'); return; }
-        try {
-            const aplicarLogY = document.getElementById('chk-log-y').checked;
-            const variaveisLogX = [];
-            if (document.getElementById('chk-log-area').checked) variaveisLogX.push('area');
-            const resultados = executarProcessamentoEstatistico(memoriaAmostras, ['area', 'vagas', 'idade'], 'preco', aplicarLogY, variaveisLogX);
-            exibirRelatorioPdf(resultados);
-        } catch (error) { alert('Erro: ' + error.message); }
-    });
-    function exibirRelatorioPdf(res) {
-        document.getElementById('painel-relatorio').style.display = 'block';
-        document.getElementById('out-n').textContent = res.estatisticasGerais.tamanhoAmostra;
-        document.getElementById('out-gl').textContent = res.estatisticasGerais.grausLiberdade;
-        document.getElementById('out-r2').textContent = res.estatisticasGerais.r2.toFixed(4);
-        document.getElementById('out-r2ajustado').textContent = res.estatisticasGerais.r2Ajustado.toFixed(4);
-        document.getElementById('out-f-calc').textContent = res.testeGlobalF.fCalculado.toFixed(4);
-        document.getElementById('out-f-pvalue').textContent = res.testeGlobalF.pValue.toExponential(4);
-        document.getElementById('out-f-sig').textContent = res.testeGlobalF.significativo ? "Sim" : "Não";
-        document.getElementById('out-f-grau').textContent = res.testeGlobalF.grauResultado;
-        const tbodyCoef = document.querySelector('#tabela-coeficientes tbody');
-        tbodyCoef.innerHTML = '';
-        res.analiseCoeficientes.forEach(c => {
-            tbodyCoef.innerHTML += `<tr><td><strong>${c.variavel}</strong></td><td>${c.coeficiente.toFixed(4)}</td><td>${c.erroPadrao.toFixed(4)}</td><td>${c.tCalculado.toFixed(4)}</td><td>${c.pValue.toFixed(4)}</td><td>${c.significativo ? '✅ Sim' : '❌ Não'}</td></tr>`;
-        });
-    }
-    inicializarBanco();
-</script>
-</body>
-</html>
+        if (memoriaAmostras.length < 5) {
+
