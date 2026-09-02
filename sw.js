@@ -1,11 +1,11 @@
 const CACHE_NAME = 'caixa-avm-v1';
 const ASSETS_TO_CACHE = [
- 
-  'index.html',
-  'manifest.json',
-  'motorEstatistico.js',
-  'database.js',
-  'https://cloudflare.com'
+ './'
+  './index.html',
+  './manifest.json',
+  './motorEstatistico.js',
+  './database.js',
+  './https://cloudflare.com'
 ];
 
 self.addEventListener('install', (event) => {
