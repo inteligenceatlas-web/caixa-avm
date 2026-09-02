@@ -104,7 +104,9 @@ export function executarProcessamentoEstatistico(amostra, variaveisX, variavelY)
     let Y = [];
 
     amostra.forEach(imovel => {
-        let linhaX =; // Intercepto bo
+        // Inicializa a linha criando um array que já contém o número 1 (Intercepto bo)
+        let linhaX = Array.from([1]); 
+        
         variaveisX.forEach(v => linhaX.push(Number(imovel[v])));
         X.push(linhaX);
         Y.push([Number(imovel[variavelY])]);
