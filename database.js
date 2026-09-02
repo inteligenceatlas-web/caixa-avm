@@ -1,4 +1,4 @@
-import { openDB } from 'idb';
+onst { openDB } = window.idb;
 
 const NOME_BANCO = 'caixa-avm-pwa';
 const VERSAO = 1;
