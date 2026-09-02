@@ -1,6 +1,5 @@
 // Removemos o import antigo e usamos o math global injetado pelo index.html
-import { create, all } from 'https://jsdelivr.net';
-const math = create(all);
+const math = window.math;
 
 
 function cdfNormal(x) {
