@@ -1,5 +1,5 @@
-import { create, all } from 'mathjs';
-const math = create(all);
+// Removemos o import antigo e usamos o math global injetado pelo index.html
+const math = window.math;
 
 function cdfNormal(x) {
     const b1 = 0.319381530, b2 = -0.356563782, b3 = 1.781477937, b4 = -1.821255978, b5 = 1.330274429;
