@@ -78,8 +78,8 @@
     </div>
 </div>
 <script type="module">
-    import { executarProcessamentoEstatistico } from './motorEstatistico.js';
-    import { salvarAmostraOffline, inicializarBanco } from './database.js';
+    import { executarProcessamentoEstatistico } from 'motorEstatistico.js';
+    import { salvarAmostraOffline, inicializarBanco } from 'database.js';
     let memoriaAmostras = [];
     document.getElementById('form-amostra').addEventListener('submit', async (e) => {
         e.preventDefault();
