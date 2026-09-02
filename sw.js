@@ -1,6 +1,6 @@
 const CACHE_NAME = 'caixa-avm-v1';
 const ASSETS_TO_CACHE = [
- './'
+ './',
   './index.html',
   './manifest.json',
   './motorEstatistico.js',
